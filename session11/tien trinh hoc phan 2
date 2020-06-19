@@ -1,0 +1,22 @@
+10. ly thuyet php
+11. array, session, cookie
+12. OOP
+13,14: mysql, ket hop php&mysql
+15: Mo hinh MVC
+16-25: Huong dan xay dung website
+	- Xay dung khung website
+	- Thuc hien trang admin
+		- Dang nhap, dang xuat
+		- Quan ly users
+		- Quan ly categories
+		- Quan ly products
+		- Quan ly parameters
+	- Thuc hien trang frontend
+		- Ghep giao dien, phan tach cac trang
+		- Xay dung trang chu
+			- cac chuc nang theo mo hinh mvc
+		- Xay dung trang danh muc
+		- Xay dung trang chi tiet
+		- Xay dung gio hang, quy trinh mua hang
+26-30: laravel
+	- Huong dan xay dung website tin tuc	
