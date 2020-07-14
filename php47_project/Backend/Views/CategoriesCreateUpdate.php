@@ -10,6 +10,23 @@
                     <input type="text" value="<?php echo isset($record->name)?$record->name:""; ?>" name="name" class="form-control" required>
                 </div>
             </div>
+            <!-- end rows -->
+            <!-- rows -->
+            <div class="row" style="margin-top:5px;">
+                <div class="col-md-2">Parent</div>
+                <div class="col-md-10">
+                    <select name="parent_id" class="form-control" style="width: 200px;">
+                        <option value="0"></option>
+                        <?php 
+                            //lay cac danh muc cap 0
+                            $listCategory = $this->ModelReadDropDownCategory();
+                         ?>
+                         <?php foreach($listCategory as $rows): ?>
+                            <option <?php if(isset($record->id)&&$record->parent_id==$rows->id): ?> selected <?php endif; ?> value="<?php echo $rows->id; ?>"><?php echo $rows->name; ?></option>
+                         <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
             <!-- end rows -->            
             <!-- rows -->
             <div class="row" style="margin-top:5px;">

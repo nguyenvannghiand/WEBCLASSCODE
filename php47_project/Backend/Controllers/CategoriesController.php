@@ -6,7 +6,7 @@
 		//ten ham dat theo quy tac camel
 		public function read(){
 			//quy dinh so ban ghi tren mot trang
-			$recordPerPage = 4;
+			$recordPerPage = 20;
 			//tinh so trang
 			$numPage = ceil($this->totalRecord()/$recordPerPage);
 			//goi ham ModelRead tu class UsersModel de lay ket qua
