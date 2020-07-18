@@ -41,42 +41,73 @@
 		}
 		//update ban ghi
 		public function modelUpdate($id){
-			//--
 			$name = $_POST["name"];
-			$email = $_POST["email"];
-			$password = $_POST["password"];
-			//--
+			$category_id = $_POST["category_id"];
+			$price = $_POST["price"];
+			$discount = $_POST["discount"];
+			$description = $_POST["description"];
+			$content = $_POST["content"];
+			$hot = isset($_POST["hot"]) ? 1 : 0;
 			//lay bien ket noi
 			$conn = Connection::getInstance();
 			//thuc hien truy van
-			$query = $conn->prepare("update products set name=:name,email=:email where id=:id");
-			$query->execute(array("id"=>$id,"name"=>$name,"email"=>$email));
-			//neu password khong rong thi update password
-			if($password != ""){
-				//ma hoa password
-				$password = md5($password);
-				$query = $conn->prepare("update products set password=:password where id=:id");
-				$query->execute(array("id"=>$id,"password"=>$password));
+			$query = $conn->prepare("update products set name=:name,category_id=:category_id,price=:price,discount=:discount,description=:description,content=:content,hot=:hot where id=:id");
+			$query->execute(array("id"=>$id,"name"=>$name,"category_id"=>$category_id,"price"=>$price,"discount"=>$discount,"description"=>$description,"content"=>$content,"hot"=>$hot));
+			//neu user chon anh			
+			if($_FILES["photo"]["name"] != ""){
+				//---
+				//lay anh cu de xoa
+				$oldQuery = $conn->query("select photo from products where id=$id");
+				$oldRecord = $oldQuery->fetch();
+				if(isset($oldRecord->photo) && file_exists("../Assets/Upload/Products/".$oldRecord->photo))
+					unlink("../Assets/Upload/Products/".$oldRecord->photo);
+				//---
+				//lay ten anh, ghep voi ham thoi gian
+				//ham time() doi thoi gian ra thanh so nguyen
+				$photo = time().$_FILES["photo"]["name"];
+				//thuc hien upload
+				move_uploaded_file($_FILES["photo"]["tmp_name"], "../Assets/Upload/Products/$photo");
+				//thuc hien truy van
+				$query = $conn->prepare("update products set photo=:photo where id=:id");
+				$query->execute(array("id"=>$id,"photo"=>$photo));
 			}
 		}
 		//create ban ghi
 		public function modelCreate(){
-			//--
 			$name = $_POST["name"];
-			$email = $_POST["email"];
-			$password = md5($_POST["password"]);
-			//--
+			$category_id = $_POST["category_id"];
+			$price = $_POST["price"];
+			$discount = $_POST["discount"];
+			$description = $_POST["description"];
+			$content = $_POST["content"];
+			$hot = isset($_POST["hot"]) ? 1 : 0;
+			$photo = "";
+			//neu user chon anh			
+			if($_FILES["photo"]["name"] != ""){				
+				//lay ten anh, ghep voi ham thoi gian
+				//ham time() doi thoi gian ra thanh so nguyen
+				$photo = time().$_FILES["photo"]["name"];
+				//thuc hien upload
+				move_uploaded_file($_FILES["photo"]["tmp_name"], "../Assets/Upload/Products/$photo");			
+			}
 			//lay bien ket noi
 			$conn = Connection::getInstance();
 			//thuc hien truy van
-			$query = $conn->prepare("insert into products set name=:name,email=:email,password=:password");
-			$query->execute(array("name"=>$name,"email"=>$email,"password"=>$password));
+			$query = $conn->prepare("insert into products set name=:name,category_id=:category_id,price=:price,discount=:discount,description=:description,content=:content,hot=:hot,photo=:photo");
+			$query->execute(array("photo"=>$photo,"name"=>$name,"category_id"=>$category_id,"price"=>$price,"discount"=>$discount,"description"=>$description,"content"=>$content,"hot"=>$hot));
 		}
 		//delete ban ghi
 		public function modelDelete($id){
 			//--
 			//lay bien ket noi
 			$conn = Connection::getInstance();
+			//---
+			//lay anh cu de xoa
+			$oldQuery = $conn->query("select photo from products where id=$id");
+			$oldRecord = $oldQuery->fetch();
+			if(isset($oldRecord->photo) && file_exists("../Assets/Upload/Products/".$oldRecord->photo))
+				unlink("../Assets/Upload/Products/".$oldRecord->photo);
+			//---
 			//thuc hien truy van
 			$query = $conn->prepare("delete from products where id=:id");
 			$query->execute(array("id"=>$id));
@@ -114,6 +145,54 @@
 			//lay nhieu ban ghi
 			$listRecord = $query->fetchAll();
 			return $listRecord;
+		}
+		//doc tat ca cac ban ghi
+		public function ModelReadParameters($product_id){
+			//lay bien ket noi
+			$conn = Connection::getInstance();
+			//thuc hien truy van
+			$query = $conn->query("select parameters.name as name, product_parameters.id as id from product_parameters inner join parameters on product_parameters.parameter_id = parameters.id where product_id = $product_id");
+			//lay tat cac ket qua tra ve
+			$result = $query->fetchAll();
+			return $result;
+		}
+		//danh sach danh muc
+		public function modelListParameter(){
+			//--
+			//lay bien ket noi
+			$conn = Connection::getInstance();
+			//thuc hien truy van
+			$query = $conn->query("select * from parameters where parent_id = 0 order by id desc");
+			//lay nhieu ban ghi
+			$listRecord = $query->fetchAll();
+			return $listRecord;
+		}
+		//danh sach danh muc con
+		public function modelListParameterSub($category_id){
+			//--
+			//lay bien ket noi
+			$conn = Connection::getInstance();
+			//thuc hien truy van
+			$query = $conn->query("select * from parameters where parent_id=$category_id order by id desc");
+			//lay nhieu ban ghi
+			$listRecord = $query->fetchAll();
+			return $listRecord;
+		}
+		public function modelAddParameter($product_id){
+			$parameter_id = $_POST["parameter_id"];
+			//lay bien ket noi
+			$conn = Connection::getInstance();
+			$query = $conn->prepare("insert into product_parameters set product_id=:product_id,parameter_id=:parameter_id");
+			$query->execute(array("product_id"=>$product_id,"parameter_id"=>$parameter_id));
+		}
+		//delete thuoc tinh san pham
+		public function modelDeleteParameter($id){
+			//--
+			//lay bien ket noi
+			$conn = Connection::getInstance();
+			//thuc hien truy van
+			$query = $conn->prepare("delete from product_parameters where id=:id");
+			$query->execute(array("id"=>$id));
 		}
 	}
  ?>

@@ -22,13 +22,13 @@
                             $category = $this->modelListCategory();
                          ?>
                         <?php foreach($category as $rows): ?>
-                            <option <?php if(isset($record->category_id)&&$record->category_id==$rows->id): ?> selected <?php endif; ?> value="$rows->id"><?php echo $rows->name; ?></option>
+                            <option <?php if(isset($record->category_id)&&$record->category_id==$rows->id): ?> selected <?php endif; ?> value="<?php echo $rows->id; ?>"><?php echo $rows->name; ?></option>
                             <?php 
                                 //lay danh muc cap con
                                 $categorySub = $this->modelListCategorySub($rows->id);
                              ?>
                              <?php foreach($categorySub as $rowsSub): ?>
-                                <option <?php if(isset($record->category_id)&&$record->category_id==$rowsSub->id): ?> selected <?php endif; ?> value="$rowsSub->id">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $rowsSub->name; ?></option>
+                                <option <?php if(isset($record->category_id)&&$record->category_id==$rowsSub->id): ?> selected <?php endif; ?> value="<?php echo $rowsSub->id; ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $rowsSub->name; ?></option>
                              <?php endforeach; ?>
                         <?php endforeach; ?>
                     </select>
@@ -85,6 +85,16 @@
                 </div>
             </div>
             <!-- end rows -->
+            <?php if(isset($record->photo) && $record->photo != "" && file_exists("../Assets/Upload/Products/".$record->photo)): ?>
+            <!-- rows -->
+            <div class="row" style="margin-top:5px;">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+                    <img src="../Assets/Upload/Products/<?php echo $record->photo; ?>" style="max-width: 100px;">
+                </div>
+            </div>
+            <!-- end rows -->
+            <?php endif; ?>
             <!-- rows -->
             <div class="row" style="margin-top:5px;">
                 <div class="col-md-2"></div>

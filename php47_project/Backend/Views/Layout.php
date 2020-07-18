@@ -100,6 +100,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="index.php?controller=parameters&action=read">
+                        <i class="fa fa-th"></i> <span>Thuộc tính sản phẩm</span>
+                    </a>
+                </li>
+                <li>
                     <a href="index.php?controller=users&action=read">
                         <i class="fa fa-code"></i> <span>Quản lý user</span>
                         <span class="pull-right-container">

@@ -1,5 +1,5 @@
 <?php
-	class CategoriesModel{
+	class ParametersModel{
 		//doc tat ca cac ban ghi
 		public function ModelRead($recordPerPage){
 			//---
@@ -15,7 +15,7 @@
 			//lay bien ket noi
 			$conn = Connection::getInstance();
 			//thuc hien truy van
-			$query = $conn->query("select * from categories where parent_id = 0 order by id desc limit $from,$recordPerPage");
+			$query = $conn->query("select * from parameters where parent_id = 0 order by id desc limit $from,$recordPerPage");
 			//lay tat cac ket qua tra ve
 			$result = $query->fetchAll();
 			return $result;
@@ -25,7 +25,7 @@
 			//lay bien ket noi
 			$conn = Connection::getInstance();
 			//thuc hien truy van
-			$query = $conn->query("select id from categories where parent_id = 0");
+			$query = $conn->query("select id from parameters where parent_id = 0");
 			return $query->rowCount();
 		}
 		//lay mot ban ghi
@@ -33,7 +33,7 @@
 			//lay bien ket noi
 			$conn = Connection::getInstance();
 			//thuc hien truy van
-			$query = $conn->prepare("select * from categories where id=:id");
+			$query = $conn->prepare("select * from parameters where id=:id");
 			$query->execute(array("id"=>$id));
 			//lay mot ban ghi
 			$record = $query->fetch();
@@ -48,7 +48,7 @@
 			//lay bien ket noi
 			$conn = Connection::getInstance();
 			//thuc hien truy van
-			$query = $conn->prepare("update categories set name=:name, parent_id=:parent_id where id=:id");
+			$query = $conn->prepare("update parameters set name=:name, parent_id=:parent_id where id=:id");
 			$query->execute(array("id"=>$id,"name"=>$name,"parent_id"=>$parent_id));			
 		}
 		//create ban ghi
@@ -60,7 +60,7 @@
 			//lay bien ket noi
 			$conn = Connection::getInstance();
 			//thuc hien truy van
-			$query = $conn->prepare("insert into categories set name=:name, parent_id=:parent_id");
+			$query = $conn->prepare("insert into parameters set name=:name, parent_id=:parent_id");
 			$query->execute(array("name"=>$name,"parent_id"=>$parent_id));
 		}
 		//delete ban ghi
@@ -69,7 +69,7 @@
 			//lay bien ket noi
 			$conn = Connection::getInstance();
 			//thuc hien truy van
-			$query = $conn->prepare("delete from categories where id=:id");
+			$query = $conn->prepare("delete from parameters where id=:id");
 			$query->execute(array("id"=>$id));
 		}
 		//lay cac danh muc cap con (tu view se goi ham nay)
@@ -77,7 +77,7 @@
 			//lay bien ket noi
 			$conn = Connection::getInstance();
 			//thuc hien truy van
-			$query = $conn->query("select * from categories where parent_id=$category_id");
+			$query = $conn->query("select * from parameters where parent_id=$category_id");
 			//lay tat ca cac ban ghi
 			$result = $query->fetchAll();
 			return $result;
@@ -86,7 +86,7 @@
 			//lay bien ket noi
 			$conn = Connection::getInstance();
 			//thuc hien truy van
-			$query = $conn->query("select * from categories where parent_id = 0 order by id desc");
+			$query = $conn->query("select * from parameters where parent_id = 0 order by id desc");
 			//lay tat cac ket qua tra ve
 			$result = $query->fetchAll();
 			return $result;
