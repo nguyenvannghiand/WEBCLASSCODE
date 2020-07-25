@@ -4,40 +4,9 @@
             <div class="row" style="margin-top:10px;">
                 <div class="head-tabs head-tab1 col-lg-3">
                     <h2>
-                        <?php 
-                            $category = $this->getCategoryName($category_id);
-                            echo isset($category->name) ? $category->name : "";
-                         ?>
+                        Search result
                     </h2>
-                </div>
-                <div class="col-lg-4 text-right">
-                    <select class="form-control" onchange="location.href = 'index.php?controller=products&action=category&id=<?php echo $category_id ?>&groupPrice='+this.value;">
-                        <option value="0">Sắp xếp theo khoảng giá</option>
-                        <option value="1tr-5tr">1 triệu - 5 triệu</option>
-                        <option value="5tr-10tr">5 triệu - 10 triệu</option>
-                        <option value="10tr-15tr">10 triệu - 15 triệu</option>
-                        <option value="15tr-20tr">15 triệu - 20 triệu</option>
-                        <option value="20tr-25tr">20 triệu - 25 triệu</option>
-                        <option value="25tr-30tr">25 triệu - 30 triệu</option>
-                    </select>
-                </div>
-                <div class="col-lg-3 text-right">
-                    <select class="form-control" onchange="location.href = 'index.php?controller=products&action=category&id=<?php echo $category_id ?>&order='+this.value;">
-                        <option value="0">Sắp xếp theo thứ tự</option>
-                        <option value="priceAsc">Giá tăng dần</option>
-                        <option value="priceDesc">Giá giảm dần</option>
-                        <option value="nameAsc">Sắp xếp A-Z</option>
-                        <option value="nameDesc">Sắp xếp Z-A</option>
-                    </select>
-                </div>
-                <div class="col-lg-2">
-                    <select class="form-control" onchange="location.href = 'index.php?controller=products&action=category&id=<?php echo $category_id ?>&pageSize='+this.value;">
-                        <option value="0">Số bản ghi</option>
-                        <option value="2">2</option>
-                        <option value="4">4</option>
-                        <option value="6">6</option>
-                    </select>
-                </div>
+                </div>                
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -81,7 +50,7 @@
                     <div class="&#x70;&#x61;&#x67;&#x69;&#x6E;&#x61;&#x74;&#x69;&#x6F;&#x6E;&#x2D;&#x63;&#x6F;&#x6E;&#x74;&#x61;&#x69;&#x6E;&#x65;&#x72;"><ul class="&#x70;&#x61;&#x67;&#x69;&#x6E;&#x61;&#x74;&#x69;&#x6F;&#x6E;">
                         <li class="disabled"><a href="#">Trang</a></li>
                         <?php for($i = 1; $i <= $numPage; $i++): ?>
-                        <li><a href="index.php?controller=products&action=category&id=<?php echo $category_id; ?>"><?php echo $i; ?></a></li>
+                        <li><a href="index.php?controller=products&action=search&key=<?php echo $key; ?>&p=<?php echo $i; ?>"><?php echo $i; ?></a></li>
                         <?php endfor; ?>
                     </ul></div>
                     <!-- end paging -->

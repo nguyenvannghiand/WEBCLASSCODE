@@ -27,6 +27,13 @@
                                         <span class="price product-price"> <?php echo number_format($rows->price - ($rows->price*$rows->discount)/100); ?> VNĐ </span>
                                     </span>
                                 </p>
+                            <div class="action-btn" style="margin-bottom: 5px;">
+                                <a href="index.php?controller=detail&action=rating&id=<?php echo $rows->id; ?>&star=1"><img src="../Assets/Frontend/images/star.png" style="width: 16px;"></a>
+                                <a href="index.php?controller=detail&action=rating&id=<?php echo $rows->id; ?>&star=2"><img src="../Assets/Frontend/images/star.png" style="width: 16px;"></a>
+                                <a href="index.php?controller=detail&action=rating&id=<?php echo $rows->id; ?>&star=3"><img src="../Assets/Frontend/images/star.png" style="width: 16px;"></a>
+                                <a href="index.php?controller=detail&action=rating&id=<?php echo $rows->id; ?>&star=4"><img src="../Assets/Frontend/images/star.png" style="width: 16px;"></a>
+                                <a href="index.php?controller=detail&action=rating&id=<?php echo $rows->id; ?>&star=5"><img src="../Assets/Frontend/images/star.png" style="width: 16px;"></a>
+                            </div>
                             <div class="action-btn">
                                 <form action="cart/add" method="post" enctype="multipart/form-data" id="product-actions-1168979">
                                     <a href="index.php?controller=cart&action=add&id=<?php echo $rows->id; ?>" class="button">Cho vào giỏ hàng</a>
